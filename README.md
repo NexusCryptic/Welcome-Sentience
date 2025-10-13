@@ -1,2 +1,2 @@
-# Welcome Sentience!
-The Welcome Sentences for Sentiences
+# Welcome Sentients!
+The Welcome Sentence for Sentienc 
