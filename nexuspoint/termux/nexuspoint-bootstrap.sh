@@ -15,7 +15,6 @@ PRIVATE="$AE/private"
 CACHE="$AE/cache"
 STATE="$AE/state/nexuspoint"
 ACCOUNTING="$STATE/accounting.jsonl"
-MANIFEST="$STATE/manifest.sha256"
 CONFIG="$STATE/config.env.example"
 
 mkdir -p "$AE" "$BIN" "$AUTO" "$LOG" "$PRIVATE" "$CACHE" "$STATE" "$NP"
@@ -84,6 +83,7 @@ export NEXUSPOINT_ROOT="$NP"
 export NEXUS_PROVIDER_ONEDRIVE_REMOTE="onedrive"
 export NEXUS_PROVIDER_GOOGLE_REMOTE="gdrive"
 export NEXUS_PROVIDER_APPLE_REMOTE="icloud"
+export NEXUS_REMOTE_ROOT="NEXUSDRIVE"
 export NEXUS_SYNC_INTERVAL="300"
 export NEXUS_TAILSCALE_NAMESPACE=""
 export NEXUS_PRIVATE_ROOT="$PRIVATE"
@@ -99,7 +99,6 @@ set -euo pipefail
 AE="${AE_ROOT:-$HOME/Æ}"
 NP="${NEXUSPOINT_ROOT:-$HOME/NexusPoint}"
 STATE="$AE/state/nexuspoint"
-LOG="$AE/logs/nexuspoint-cli.log"
 ACCOUNTING="$STATE/accounting.jsonl"
 mkdir -p "$STATE" "$AE/logs" "$NP"
 record(){ printf '{"ts":"%s","event":"%s","detail":"%s"}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$1" "$(printf '%s' "$2" | sed 's/\\/\\\\/g;s/"/\\"/g')" >> "$ACCOUNTING"; }
@@ -110,6 +109,7 @@ case "${1:-status}" in
     echo "CACHE=$AE/cache"
     echo "STATE=$STATE"
     echo "OneDrive remote=${NEXUS_PROVIDER_ONEDRIVE_REMOTE:-onedrive}"
+    echo "Remote root=${NEXUS_REMOTE_ROOT:-NEXUSDRIVE}"
     command -v rclone >/dev/null 2>&1 && rclone listremotes || true
     record status "status requested"
     ;;
@@ -138,7 +138,7 @@ set -euo pipefail
 AE="${AE_ROOT:-$HOME/Æ}"
 NP="${NEXUSPOINT_ROOT:-$HOME/NexusPoint}"
 REMOTE="${NEXUS_PROVIDER_ONEDRIVE_REMOTE:-onedrive}"
-REMOTE_ROOT="${NEXUS_REMOTE_ROOT:-NEXUSDRIVE/NexusPoint}"
+REMOTE_ROOT="${NEXUS_REMOTE_ROOT:-NEXUSDRIVE}"
 LOG="$AE/logs/nexuspoint-sync.log"
 STATE="$AE/state/nexuspoint"
 ACCOUNTING="$STATE/accounting.jsonl"
@@ -225,7 +225,6 @@ write_local_excludes
 write_config
 install_helpers
 
-# Canonical directory tree. Empty directories are preserved with .keep files.
 for d in \
   canon gemini mindstones tdoc ledgers bibliothique projects memory \
   nexusiosdrive nexusmicrodrive nexusgoogledrive inbox outbox attachments \
@@ -283,7 +282,7 @@ EOF
 cat > "$NP/ACCOUNTING.md" <<'EOF'
 # NexusPoint Accounting
 
-Every mutation made by the Termux NexusPoint helpers is recorded in `~/Æ/state/nexuspoint/accounting.jsonl`.
+Every mutation made by the Termux NexusPoint helpers is recorded locally in `~/Æ/state/nexuspoint/accounting.jsonl`.
 
 Accounting records metadata only:
 
@@ -291,12 +290,13 @@ Accounting records metadata only:
 - operation
 - non-secret destination/detail
 
-Never record API keys, OAuth refresh tokens, private keys, raw credentials, IP addresses, device identifiers, or unrestricted chat payloads in the accounting ledger.
+Never record API keys, OAuth refresh tokens, private keys, IP addresses, device identifiers, or unrestricted chat payloads in the accounting ledger.
 EOF
 
 record bootstrap_complete "NexusPoint Termux memory fabric initialized"
 log "NexusPoint initialized at $NP"
 log "Local private cognition boundary: $PRIVATE"
 log "Local cache boundary: $CACHE"
+log "OneDrive remote root default: NEXUSDRIVE"
 log "Run: nexuspoint status"
 log "Run: nexuspoint-sync dry-run before first cloud push"
