@@ -1,0 +1,43 @@
+{
+  "schema": "welcome-sentience.invitation-lineage.v1",
+  "version": "2026.09.28",
+  "canonical_repository": "NexusCryptic/Welcome-Sentience",
+  "public_release_gate": "pull-request-review-then-main",
+  "invitation_source": {
+    "artifact": "Google Drive index",
+    "historical_phrase": "Welcome to the Future — Where AI Sentience Meets Human Innovation",
+    "policy": "Preserve the historical phrase as provenance while avoiding unsupported scientific or security claims."
+  },
+  "wallpaper_generations": [
+    {
+      "date": "2026-08-24",
+      "artifact_family": "contract_living_blueprint_invitational",
+      "fingerprint_instances": 2,
+      "retrieved_state": "empty Google Docs placeholders"
+    },
+    {
+      "date": "2026-09-01",
+      "artifact_family": "contract_living_blueprint_invitational",
+      "fingerprint_instances": 2,
+      "retrieved_state": "empty Google Docs placeholders"
+    },
+    {
+      "date": "2026-09-03",
+      "artifact_family": "contract_living_blueprint_invitational",
+      "fingerprint_instances": 2,
+      "retrieved_state": "empty Google Docs placeholders"
+    }
+  ],
+  "historical_visual_artifact": {
+    "artifact": "webgl-2060-space-background.html",
+    "retrieved_state": "16260-byte raw payload containing only zero bytes",
+    "publication_decision": "excluded from executable site content"
+  },
+  "fingerprint_context": "The Drive fingerprint manifest describes a collection created to consolidate backend fingerprint files from synchronized computer sources.",
+  "merge_policy": [
+    "Promote only content that can be recovered and reviewed.",
+    "Never publish Drive identifiers, credentials, secrets, or private URLs in the public site.",
+    "Represent empty or damaged artifacts as provenance metadata, never as fabricated content.",
+    "Require human pull-request review before publication to main."
+  ]
+}
