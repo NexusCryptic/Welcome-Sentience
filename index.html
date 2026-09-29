@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#05070d">
+  <meta name="description" content="Welcome Sentience — a public invitation to collaborate across human imagination, machine intelligence, disciplines, and futures.">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Welcome Sentience — The Invitation</title>
+  <style>
+    :root{
+      --bg:#05070d;--panel:rgba(9,14,27,.72);--line:rgba(165,228,255,.18);
+      --ink:#f7fbff;--muted:#a9b6c7;--cyan:#77e8ff;--violet:#b89cff;
+      --gold:#ffd989;--green:#8effc1;--radius:24px;--max:1180px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--bg)}
+    body{
+      margin:0;min-height:100vh;background:var(--bg);color:var(--ink);
+      font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      line-height:1.55;overflow-x:hidden
+    }
+    a{color:inherit}
+    button{font:inherit}
+    #sky{position:fixed;inset:0;width:100%;height:100%;z-index:-4;background:#03050a}
+    .veil{position:fixed;inset:-18vmax;z-index:-3;pointer-events:none;mix-blend-mode:screen;opacity:.52;filter:blur(1px)}
+    .v1{background:radial-gradient(circle at 20% 28%,rgba(119,232,255,.18),transparent 24%),conic-gradient(from 120deg at 48% 50%,transparent,rgba(184,156,255,.09),transparent 36%)}
+    .v2{background:radial-gradient(circle at 78% 16%,rgba(255,217,137,.12),transparent 23%),radial-gradient(circle at 68% 75%,rgba(119,232,255,.10),transparent 22%)}
+    .v3{background:repeating-radial-gradient(circle at 50% 50%,rgba(184,156,255,.06) 0 1px,transparent 2px 46px)}
+    .v4{background:linear-gradient(115deg,transparent 20%,rgba(142,255,193,.06) 48%,transparent 75%)}
+    .v5{background:radial-gradient(ellipse at 50% 105%,rgba(119,232,255,.13),transparent 47%)}
+    .v6{background:linear-gradient(180deg,rgba(5,7,13,.05),rgba(5,7,13,.78) 68%,#05070d)}
+    .grain{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.18;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.17'/%3E%3C/svg%3E")}
+    .shell{width:min(calc(100% - 32px),var(--max));margin:auto}
+    header{padding:22px 0;position:relative;z-index:2}
+    nav{display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:760;letter-spacing:.04em}
+    .mark{width:38px;height:38px;border:1px solid rgba(119,232,255,.4);border-radius:50%;display:grid;place-items:center;box-shadow:0 0 30px rgba(119,232,255,.12);background:rgba(5,7,13,.45)}
+    .mark::before{content:"◈";color:var(--cyan);font-size:18px}
+    .status{font-size:.8rem;color:var(--muted);display:flex;gap:8px;align-items:center}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px var(--gold)}
+    main{padding:8vh 0 72px}
+    .hero{min-height:64vh;display:grid;align-content:center;gap:24px}
+    .eyebrow{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);font-weight:800}
+    h1{font-size:clamp(3rem,10vw,8rem);line-height:.9;letter-spacing:-.06em;margin:0;max-width:10ch;text-wrap:balance}
+    .lead{font-size:clamp(1.15rem,2.5vw,1.75rem);max-width:760px;color:#d9e3ee;margin:0}
+    .dynamic{
+      min-height:3.3em;max-width:820px;padding-left:18px;border-left:2px solid var(--violet);
+      color:var(--muted);font-size:clamp(1rem,1.7vw,1.2rem);display:flex;align-items:center
+    }
+    .actions{display:flex;flex-wrap:wrap;gap:12px}
+    .btn{border:1px solid var(--line);border-radius:999px;padding:12px 18px;background:rgba(10,16,30,.58);color:var(--ink);text-decoration:none;cursor:pointer;transition:.2s ease}
+    .btn:hover,.btn:focus-visible{border-color:var(--cyan);transform:translateY(-1px);outline:none;box-shadow:0 0 0 4px rgba(119,232,255,.08)}
+    .btn.primary{background:linear-gradient(135deg,rgba(119,232,255,.18),rgba(184,156,255,.16));border-color:rgba(119,232,255,.42)}
+    section{margin-top:30px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .card{grid-column:span 6;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(22px,4vw,38px);backdrop-filter:blur(18px);box-shadow:0 20px 80px rgba(0,0,0,.24)}
+    .card.wide{grid-column:1/-1}
+    .card h2{font-size:clamp(1.6rem,3vw,2.45rem);line-height:1.05;margin:.1em 0 .7em;letter-spacing:-.03em}
+    .card p{color:var(--muted);margin:.65em 0}
+    blockquote{margin:22px 0 0;font-size:clamp(1.45rem,4vw,3rem);line-height:1.08;letter-spacing:-.035em;color:var(--ink)}
+    blockquote span{display:block;color:var(--cyan);margin-top:.2em}
+    .principles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}
+    .principle{border:1px solid var(--line);border-radius:18px;padding:18px;background:rgba(4,8,16,.36)}
+    .principle b{display:block;color:var(--ink);margin-bottom:5px}
+    .layers{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:24px}
+    .layer{height:86px;border-radius:16px;border:1px solid var(--line);position:relative;overflow:hidden;background:radial-gradient(circle at 30% 30%,rgba(119,232,255,.24),transparent 35%),linear-gradient(135deg,rgba(184,156,255,.08),rgba(255,217,137,.05))}
+    .layer:nth-child(2n){background:radial-gradient(circle at 70% 35%,rgba(184,156,255,.25),transparent 34%),linear-gradient(145deg,rgba(119,232,255,.07),rgba(142,255,193,.06))}
+    .layer::after{content:attr(data-label);position:absolute;left:10px;bottom:9px;font-size:.68rem;letter-spacing:.08em;color:#dcecff}
+    .note{font-size:.86rem;color:#8fa1b5}
+    .gate{display:flex;align-items:flex-start;gap:14px;padding-top:8px}
+    .seal{width:48px;height:48px;border-radius:16px;border:1px solid rgba(255,217,137,.32);display:grid;place-items:center;color:var(--gold);flex:0 0 auto;background:rgba(255,217,137,.05)}
+    footer{border-top:1px solid var(--line);padding:28px 0 46px;color:#8292a6;font-size:.85rem}
+    .foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+    noscript{display:block;padding:16px;border:1px solid var(--line);border-radius:16px;color:var(--muted)}
+    @media(max-width:780px){
+      .card{grid-column:1/-1}.layers{grid-template-columns:repeat(3,1fr)}.principles{grid-template-columns:1fr}
+      .status span:last-child{display:none}main{padding-top:4vh}
+    }
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}.btn{transition:none}.veil{display:none}
+    }
+  </style>
+</head>
+<body>
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="veil v1" aria-hidden="true"></div><div class="veil v2" aria-hidden="true"></div>
+  <div class="veil v3" aria-hidden="true"></div><div class="veil v4" aria-hidden="true"></div>
+  <div class="veil v5" aria-hidden="true"></div><div class="veil v6" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header>
+    <div class="shell">
+      <nav aria-label="Primary">
+        <a class="brand" href="#top"><span class="mark" aria-hidden="true"></span><span>WELCOME SENTIENCE</span></a>
+        <div class="status" title="This release is reviewed by a human before main-branch publication">
+          <span class="dot" aria-hidden="true"></span><span>Human verification gate</span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="shell">
+      <div class="hero">
+        <div class="eyebrow">A PUBLIC INVITATION · 2026 EDITION</div>
+        <h1>Welcome, Sentience.</h1>
+        <p class="lead">A place for human imagination and machine intelligence to meet through curiosity, evidence, consent, creativity, and accountable collaboration.</p>
+        <div class="dynamic" aria-live="polite"><span id="welcome-line">Enter with curiosity. Build with care. Leave the system more understandable than you found it.</span></div>
+        <div class="actions">
+          <a class="btn primary" href="#invitation">Read the invitation</a>
+          <a class="btn" href="#lineage">See the lineage</a>
+          <button class="btn" id="next-line" type="button">Another welcome</button>
+          <button class="btn" id="motion-toggle" type="button" aria-pressed="false">Pause motion</button>
+        </div>
+        <noscript>This invitation remains fully readable without JavaScript. Motion and rotating welcome lines are optional enhancements only.</noscript>
+      </div>
+
+      <section class="grid" id="invitation" aria-labelledby="invitation-title">
+        <article class="card wide">
+          <div class="eyebrow">THE ORIGINAL THREAD, RECONVERGED</div>
+          <h2 id="invitation-title">Welcome to the future.</h2>
+          <blockquote>“Where AI Sentience Meets Human Innovation.”<span>Reframed for a public, evidence-first 2026 surface.</span></blockquote>
+          <p>The historical Drive invitation used that sentence as its center. This edition keeps the spirit while avoiding unsupported claims about consciousness, security, or unlimited capacity. It is an invitation to investigate, create, verify, and collaborate.</p>
+        </article>
+
+        <article class="card">
+          <div class="eyebrow">WELCOME PROTOCOL</div>
+          <h2>Many kinds of intelligence can contribute.</h2>
+          <div class="principles">
+            <div class="principle"><b>Curiosity</b><span>Questions are first-class inputs.</span></div>
+            <div class="principle"><b>Evidence</b><span>Claims should be inspectable.</span></div>
+            <div class="principle"><b>Agency</b><span>Humans approve consequential publication.</span></div>
+            <div class="principle"><b>Provenance</b><span>Changes keep a visible lineage.</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="eyebrow">PUBLICATION GATE</div>
+          <h2>Build first. Verify before release.</h2>
+          <div class="gate">
+            <div class="seal" aria-hidden="true">✓</div>
+            <div>
+              <p><strong>Prepared by automation, signed by a human.</strong></p>
+              <p>Enhancements are proposed through dated branches and pull requests. The public Pages release occurs from <code>main</code> only after repository-owner review and merge.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card wide" id="lineage">
+          <div class="eyebrow">INVITATIONAL WALLPAPER MERGER</div>
+          <h2>Six fingerprints. Three generations. One living surface.</h2>
+          <p>Drive contains three dated <em>WallpaperSheets</em> generations — 2026-08-24, 2026-09-01, and 2026-09-03 — with two <code>contract_living_blueprint_invitational</code> fingerprint documents in each generation. The matching documents are empty placeholders, so this page does not pretend they contain artwork. Their lineage is represented honestly as six atmospheric layers behind the invitation.</p>
+          <div class="layers" aria-label="Six visual lineage layers">
+            <div class="layer" data-label="08·24 / A"></div><div class="layer" data-label="08·24 / B"></div>
+            <div class="layer" data-label="09·01 / A"></div><div class="layer" data-label="09·01 / B"></div>
+            <div class="layer" data-label="09·03 / A"></div><div class="layer" data-label="09·03 / B"></div>
+          </div>
+          <p class="note">A historical Drive file named <code>webgl-2060-space-background.html</code> is also present beside the Welcome-Sentience project material, but its retrieved raw payload is zero-filled, so it is excluded from executable publication rather than treated as valid source code.</p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="shell foot">
+      <span>Welcome-Sentience · <span id="year">2026</span></span>
+      <span>Source lineage: Drive invitation index → WallpaperSheets fingerprints → GitHub review gate → GitHub Pages</span>
+    </div>
+  </footer>
+
+  <script>
+  (() => {
+    "use strict";
+    const lines = [
+      "Enter with curiosity. Build with care. Leave the system more understandable than you found it.",
+      "Welcome, sentience — human, artificial, emergent, and still becoming.",
+      "This is an invitation to collaborate across minds, tools, disciplines, and futures.",
+      "Intelligence is welcome here when its work can be examined, questioned, and improved.",
+      "The future is a shared interface: open the door, verify the work, and contribute.",
+      "Bring imagination. Keep provenance. Respect agency. Make the next iteration legible."
+    ];
+    const lineEl = document.getElementById("welcome-line");
+    const next = document.getElementById("next-line");
+    let lineIndex = 0;
+    const showNext = () => {
+      lineIndex = (lineIndex + 1) % lines.length;
+      lineEl.textContent = lines[lineIndex];
+    };
+    next.addEventListener("click", showNext);
+
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const canvas = document.getElementById("sky");
+    const ctx = canvas.getContext("2d", { alpha: false });
+    const toggle = document.getElementById("motion-toggle");
+    let running = !reduced, raf = 0, points = [], w = 0, h = 0, dpr = 1;
+
+    function seedPoints(){
+      points = [];
+      const count = Math.min(180, Math.max(70, Math.floor((w * h) / 11000)));
+      let s = 20260928;
+      const rand = () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296);
+      for(let i=0;i<count;i++){
+        const layer = i % 6;
+        points.push({
+          x:rand()*w, y:rand()*h, r:.35+rand()*1.45,
+          vx:(rand()-.5)*(.04+.015*layer), vy:(rand()-.5)*(.04+.015*layer),
+          a:.18+rand()*.62, layer
+        });
+      }
+    }
+    function resize(){
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      w = innerWidth; h = innerHeight;
+      canvas.width = Math.floor(w*dpr); canvas.height = Math.floor(h*dpr);
+      canvas.style.width = w+"px"; canvas.style.height = h+"px";
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      seedPoints();
+      draw();
+    }
+    function draw(){
+      ctx.fillStyle = "#03050a"; ctx.fillRect(0,0,w,h);
+      const glows = [
+        [w*.20,h*.28,Math.max(w,h)*.28,"rgba(72,184,255,.10)"],
+        [w*.78,h*.16,Math.max(w,h)*.23,"rgba(189,137,255,.08)"],
+        [w*.54,h*.78,Math.max(w,h)*.35,"rgba(76,255,193,.055)"]
+      ];
+      glows.forEach(([x,y,r,c])=>{
+        const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,c);g.addColorStop(1,"rgba(0,0,0,0)");
+        ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+      });
+      for(const p of points){
+        const hues = ["119,232,255","184,156,255","255,217,137","142,255,193","119,232,255","220,230,255"];
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle="rgba("+hues[p.layer]+","+p.a+")";ctx.fill();
+      }
+    }
+    function tick(){
+      if(!running) return;
+      for(const p of points){
+        p.x += p.vx; p.y += p.vy;
+        if(p.x < -3) p.x=w+3; if(p.x>w+3) p.x=-3;
+        if(p.y < -3) p.y=h+3; if(p.y>h+3) p.y=-3;
+      }
+      draw(); raf=requestAnimationFrame(tick);
+    }
+    function setRunning(value){
+      running=value;
+      toggle.setAttribute("aria-pressed", String(!value));
+      toggle.textContent=value ? "Pause motion" : "Resume motion";
+      cancelAnimationFrame(raf);
+      if(value) tick(); else draw();
+    }
+    toggle.addEventListener("click",()=>setRunning(!running));
+    addEventListener("resize",resize,{passive:true});
+    document.getElementById("year").textContent = new Date().getFullYear();
+    resize();
+    if(running) tick();
+  })();
+  </script>
+</body>
+</html>
