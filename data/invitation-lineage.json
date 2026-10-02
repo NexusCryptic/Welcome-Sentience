@@ -38,6 +38,22 @@
     "Promote only content that can be recovered and reviewed.",
     "Never publish Drive identifiers, credentials, secrets, or private URLs in the public site.",
     "Represent empty or damaged artifacts as provenance metadata, never as fabricated content.",
-    "Require human pull-request review before publication to main."
+    "Require human pull-request review before publication to main.",
+    "The six empty Google Docs placeholders and the two recovered HTML variants are distinct artifact types; do not treat them as interchangeable or publish the HTML bundle without separate review."
+  ],
+  "reviewed_separately_on": "2026-10-02",
+  "recovered_html_variants": [
+    {
+      "artifact_family": "contract_living_blueprint_invitational.html",
+      "variant": "Contract 0",
+      "state": "recoverable self-contained HTML bundle",
+      "review_status": "source content recovered; provenance and public-safety review pending"
+    },
+    {
+      "artifact_family": "contract_living_blueprint_invitational (1).html",
+      "variant": "Contract 0 v2",
+      "state": "recoverable self-contained HTML bundle",
+      "review_status": "source content recovered; provenance and public-safety review pending"
+    }
   ]
 }
