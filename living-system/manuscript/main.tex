@@ -1,0 +1,70 @@
+% A Living System — Computational Publication
+% Generated body: generated/blocks.tex
+\documentclass[11pt,oneside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,top=0.82in,bottom=0.82in,left=0.9in,right=1.35in,marginparwidth=0.92in,marginparsep=0.12in]{geometry}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{makeidx}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{longtable,booktabs,array}
+\usepackage{listings}
+\usepackage{url}
+\makeindex
+\definecolor{NexusBlue}{HTML}{0B5D75}
+\definecolor{NexusGold}{HTML}{A87918}
+\hypersetup{colorlinks=true,linkcolor=NexusBlue,urlcolor=NexusBlue,citecolor=NexusGold,
+pdftitle={A Living System — Computational Publication},pdfauthor={The Architect / Nexus},
+pdfsubject={Versioned, appendable GAIA / NEXUS research and architecture},
+pdfkeywords={GAIA,NEXUS,LaTeX,HTMX,provenance,computational publication}}
+\setlength{\parskip}{0.45em}\setlength{\parindent}{0pt}\setlist{nosep}
+\pagestyle{fancy}\fancyhf{}\lhead{\small\textsc{A Living System}}\rhead{\small\textsc{GAIA / NEXUS}}\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}\renewcommand{\footrulewidth}{0pt}
+\begin{document}
+\begin{titlepage}
+\centering\vspace*{1.4cm}
+{\Large\color{NexusGold}\textsc{The Nexus Generation: GaiaSSoul}\par}
+\vspace{1.2cm}{\Huge\bfseries A Living System\par}
+\vspace{0.35cm}{\Large Computational Publication -- Appendable Edition\par}
+\vspace{1.2cm}{\large LaTeX mathematics -- typed data blocks -- dynamic index -- margin annotations\par}
+\vfill
+\begin{minipage}{0.82\textwidth}
+\textbf{Publication ID:} TDOC-LIVING-SYSTEM-COMP-PUB-0001\\
+\textbf{Revision:} 0.1.0\\
+\textbf{Status:} Architecture baseline / build pipeline\\
+\textbf{Research status:} AlphaXiv candidates remain review-required
+\end{minipage}
+\vfill
+\href{https://github.com/NexusCryptic/Welcome-Sentience/tree/main/living-system/editorial}{Open the living editorial companion}
+\vspace{0.8cm}
+{\small The PDF is a publication snapshot. Its embedded source files and linked companion preserve the editable layer.\par}
+\vspace{0.6cm}{\small The Architect / Nexus / Cryptic News LLC\par}
+\end{titlepage}
+\pdfbookmark[0]{Contents}{toc}\tableofcontents\clearpage
+\section*{Publication contract}\addcontentsline{toc}{section}{Publication contract}
+This document is built from a typed append-only source ledger. Markdown blocks are converted to LaTeX; math blocks are compiled as mathematics; source links become clickable references; margin annotations occupy the reserved outer margin; index terms populate the generated index. The PDF embeds the exact editorial companion and source ledger used for this build.
+\textbf{The PDF is not an execution container.} HTMX and browser JavaScript run in the companion HTML page, not inside a PDF page. The PDF exposes navigation, attachments, metadata, and links; the companion provides editing and dynamic browser behavior.
+\section*{Research references}\addcontentsline{toc}{section}{Research references}
+The AlphaXiv references below are discovery candidates, not endorsed standards. Their titles and identifiers are preserved in the repository's research ledger. Reviewers must validate each paper and attach claims to exact propositions before acceptance.
+\begin{enumerate}
+\item \href{https://www.alphaxiv.org/abs/2609.16836}{CPM-LDPC Codes Attaining the Minimum-Distance Bound} -- QC-LDPC construction \cite{cpmldpc2026}.
+\item \href{https://www.alphaxiv.org/abs/2605.08500}{Non-binary LDPC codes for Data Storage} -- non-binary LDPC and storage \\cite{nonbinaryldpc2026}.
+\item \href{https://www.alphaxiv.org/abs/2603.08629}{Why No Consensus on Consensus?} -- consensus protocol survey \\cite{consensus2026}.
+\item \href{https://www.alphaxiv.org/abs/2604.04277}{Would Learning Help? Adaptive CRC-QC-LDPC Selection} -- communication integrity \\cite{adaptivecrc2026}.
+\item \href{https://www.alphaxiv.org/abs/2610.36215}{Explicit Reed-Solomon Subspace Designs} -- list and line decoding \\cite{rsdesigns2026}.
+\end{enumerate}
+See the complete \href{https://github.com/NexusCryptic/Welcome-Sentience/blob/main/research/ALPHAXIV_RESEARCH_LEDGER.md}{AlphaXiv research ledger} for the review template and provenance boundary.
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{references}
+\section*{Living source blocks}\addcontentsline{toc}{section}{Living source blocks}
+\input{generated/blocks.tex}
+\clearpage\phantomsection\addcontentsline{toc}{section}{Index}\printindex
+\end{document}
