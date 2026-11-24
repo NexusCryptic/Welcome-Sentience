@@ -1,0 +1,78 @@
+{
+  "schema": "gaia.ethernet.public-mesh.v1",
+  "revision": "1.0.0",
+  "generated": "2026-11-24",
+  "entrypoint": "https://github.com/NexusCryptic/Welcome-Sentience",
+  "nodes": [
+    {
+      "id": "welcome",
+      "label": "Welcome Sentience",
+      "kind": "public-entry",
+      "url": "https://github.com/NexusCryptic/Welcome-Sentience",
+      "status": "public-repository"
+    },
+    {
+      "id": "ideal-enigma",
+      "label": "UNIOMNI Stage 0",
+      "kind": "source-index",
+      "url": "https://github.com/machackabook/ideal-enigma",
+      "status": "public-source"
+    },
+    {
+      "id": "gaia-memory-bridge",
+      "label": "GAIA Nexus Memory Bridge",
+      "kind": "authenticated-memory",
+      "url": "https://gaia-nexus-memory-bridge.machackabook.chatgpt.site",
+      "mcp": "https://gaia-nexus-memory-bridge.machackabook.chatgpt.site/mcp",
+      "status": "owner-authenticated"
+    },
+    {
+      "id": "alphaxiv",
+      "label": "AlphaXiv Research Ledger",
+      "kind": "research-index",
+      "url": "https://www.alphaxiv.org/",
+      "status": "candidate-references-require-review"
+    },
+    {
+      "id": "cloudflare",
+      "label": "Cloudflare",
+      "kind": "infrastructure-provider",
+      "url": "https://developers.cloudflare.com/",
+      "status": "provider-link-only"
+    },
+    {
+      "id": "gitlab",
+      "label": "GitLab",
+      "kind": "collaboration-provider",
+      "url": "https://gitlab.com/",
+      "status": "project-route-pending"
+    },
+    {
+      "id": "huggingface",
+      "label": "Hugging Face",
+      "kind": "model-provider",
+      "url": "https://huggingface.co/",
+      "status": "project-route-pending"
+    },
+    {
+      "id": "vercel",
+      "label": "Vercel",
+      "kind": "deployment-provider",
+      "url": "https://vercel.com/",
+      "status": "deployment-route-pending"
+    },
+    {
+      "id": "sos-google-ai-studio",
+      "label": "S.O.S. Google AI Studio",
+      "kind": "prototype-workspace",
+      "url": "https://aistudio.google.com/u/1/apps/69753da2-22e2-4492-a9b7-d95ee9e5c11a?showPreview=true&showAssistant=true",
+      "status": "access-controlled"
+    }
+  ],
+  "boundaries": [
+    "No private memory records, credentials, tokens, session cookies, device addresses, or local vault contents are included.",
+    "The Memory Bridge requires independent OAuth authentication; this manifest is not an authorization grant.",
+    "Provider homepages do not prove account connectivity, project integration, or deployment status.",
+    "AlphaXiv candidate references are not approved standards until explicit review is recorded."
+  ]
+}
