@@ -45,6 +45,7 @@ a{color:var(--cyan)}footer{padding:18px 4vw;color:var(--muted);border-top:1px so
   <label for="margin">Margin annotation</label><input id="margin" maxlength="240" placeholder="Short note for the printed outer margin">
   <label for="terms">Index terms (comma-separated)</label><input id="terms" placeholder="provenance, QC-LDPC, verification">
   <label for="source">Source URL (optional)</label><input id="source" type="url" placeholder="https://…">
+  <label for="importLedger">Import a previously exported JSONL ledger</label><input id="importLedger" type="file" accept=".jsonl,application/x-ndjson">
   <div class="row">
     <button id="previewBtn" type="button">Preview Markdown</button>
     <button id="appendBtn" class="primary" type="button">Append block</button>
@@ -93,7 +94,19 @@ a{color:var(--cyan)}footer{padding:18px 4vw;color:var(--muted);border-top:1px so
   const parseLedger=text=>text.split(/\r?\n/).filter(line=>line.trim()).map(line=>JSON.parse(line));
   fetch(ledgerUrl).then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.text()})
     .then(text=>{blocks=parseLedger(text);render();status("Loaded "+blocks.length+" source blocks. Local edits remain local until exported and committed.");})
-    .catch(error=>{status("Ledger load unavailable ("+error.message+"). Serve this directory over HTTP(S), or import a JSONL ledger in a later revision.");});
+    .catch(error=>{status("Ledger load unavailable ("+error.message+"). Serve this directory over HTTP(S), or import a JSONL ledger.");});
+  $("importLedger").addEventListener("change",async event=>{
+    const file=event.target.files?.[0];if(!file)return;
+    try{
+      const imported=parseLedger(await file.text());
+      const ids=imported.map(b=>b.id),seq=imported.map(b=>Number(b.sequence));
+      if(new Set(ids).size!==ids.length||seq.some((n,i)=>!Number.isInteger(n)||n<1||(i&&n<=seq[i-1])))throw new Error("Duplicate IDs or invalid sequence order.");
+      const baseIds=blocks.slice(0,Math.min(blocks.length,imported.length)).map(b=>b.id);
+      if(blocks.length&&baseIds.some((id,i)=>id!==ids[i]))throw new Error("Imported ledger does not preserve the current ledger prefix.");
+      blocks=imported;render();status("Imported "+blocks.length+" blocks. Export and commit to establish the next durable revision.");
+    }catch(error){status("Import rejected: "+error.message);}
+    event.target.value="";
+  });
   $("previewBtn").addEventListener("click",()=>{
     const content=$("body").value;
     $("preview").innerHTML=$("kind").value==="math"?"<pre>"+content.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))+"</pre>":safeMarkdown(content);
