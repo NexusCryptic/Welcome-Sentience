@@ -63,7 +63,7 @@ a{color:var(--cyan)}footer{padding:18px 4vw;color:var(--muted);border-top:1px so
     <p class="muted">Loading research navigation…</p>
   </div>
   <h3>Build contract</h3>
-  <p class="muted">The build pipeline validates block IDs and sequence order, converts Markdown through Pandoc, compiles the LaTeX manuscript, generates the index and embeds source artifacts. Git commits preserve historical revisions.</p>
+  <div id="build-contract" hx-get="partials/build-contract.html" hx-trigger="load" hx-swap="innerHTML"><p class="muted">Loading build contract…</p></div>
   <a class="button" href="../README.md">Read build instructions</a>
 </aside>
 </main>
