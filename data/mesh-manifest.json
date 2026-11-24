@@ -1,72 +1,233 @@
 {
   "schema": "gaia.ethernet.public-mesh.v1",
-  "revision": "1.0.0",
+  "revision": "1.1.0",
   "generated": "2026-11-24",
   "entrypoint": "https://github.com/NexusCryptic/Welcome-Sentience",
   "nodes": [
     {
       "id": "welcome",
-      "label": "Welcome Sentience",
-      "kind": "public-entry",
+      "name": "Welcome Sentience",
+      "kind": "core",
+      "state": "Public repository · invitation page",
+      "desc": "The public gateway, first-issue invitation, and canonical entry point into the project topology.",
       "url": "https://github.com/NexusCryptic/Welcome-Sentience",
-      "status": "public-repository"
+      "edges": [
+        "ideal",
+        "bridge",
+        "research",
+        "sos",
+        "cloudflare"
+      ]
     },
     {
-      "id": "ideal-enigma",
-      "label": "UNIOMNI Stage 0",
-      "kind": "source-index",
+      "id": "ideal",
+      "name": "UNIOMNI · ideal-enigma",
+      "kind": "core",
+      "state": "Public repository · Stage 0 source",
+      "desc": "The source index and UNIOMNI Stage 0 runtime. The README is the static search console; runtime/index.html is a local token-protected command surface.",
       "url": "https://github.com/machackabook/ideal-enigma",
-      "status": "public-source"
+      "edges": [
+        "welcome",
+        "bridge",
+        "worker",
+        "runtime"
+      ]
     },
     {
-      "id": "gaia-memory-bridge",
-      "label": "GAIA Nexus Memory Bridge",
-      "kind": "authenticated-memory",
+      "id": "runtime",
+      "name": "UNIOMNI local runtime",
+      "kind": "core",
+      "state": "Source available · local execution",
+      "desc": "Local ingestion, cycle, vault topology, and sandboxed preview. Requires a locally running server and locally issued bearer token.",
+      "url": "https://github.com/machackabook/ideal-enigma/tree/main/runtime",
+      "edges": [
+        "ideal",
+        "bridge"
+      ]
+    },
+    {
+      "id": "bridge",
+      "name": "GAIA Nexus Memory Bridge",
+      "kind": "core",
+      "state": "Owner-authenticated · private records",
+      "desc": "OAuth-protected MCP memory service. Public visitors may reach its portal or endpoint, but records and tools require separate authentication.",
       "url": "https://gaia-nexus-memory-bridge.machackabook.chatgpt.site",
-      "mcp": "https://gaia-nexus-memory-bridge.machackabook.chatgpt.site/mcp",
-      "status": "owner-authenticated"
+      "edges": [
+        "welcome",
+        "ideal",
+        "portal",
+        "research"
+      ]
     },
     {
-      "id": "alphaxiv",
-      "label": "AlphaXiv Research Ledger",
-      "kind": "research-index",
+      "id": "portal",
+      "name": "GAIA Memory Portal",
+      "kind": "core",
+      "state": "Portal entry point · owner access",
+      "desc": "The portal is an entry surface; owner-private data remains behind authentication.",
+      "url": "https://gaia-memory-portal.machackabook.chatgpt.site/#mesh",
+      "edges": [
+        "bridge",
+        "welcome"
+      ]
+    },
+    {
+      "id": "research",
+      "name": "AlphaXiv evidence ledger",
+      "kind": "research",
+      "state": "Candidate references · review required",
+      "desc": "Public research discovery and paper records. Candidate references are not project-approved standards until reviewed and accepted with a recorded rationale.",
       "url": "https://www.alphaxiv.org/",
-      "status": "candidate-references-require-review"
+      "edges": [
+        "welcome",
+        "bridge",
+        "ideal"
+      ]
+    },
+    {
+      "id": "qc",
+      "name": "QC-LDPC research",
+      "kind": "research",
+      "state": "Candidate literature",
+      "desc": "Research relevant to quasi-cyclic LDPC construction, decoding, and integrity systems.",
+      "url": "https://www.alphaxiv.org/abs/2609.16836",
+      "edges": [
+        "research",
+        "rs"
+      ]
+    },
+    {
+      "id": "rs",
+      "name": "Reed–Solomon research",
+      "kind": "research",
+      "state": "Candidate literature",
+      "desc": "Research relevant to algebraic coding and list-decoding bounds.",
+      "url": "https://www.alphaxiv.org/abs/2610.36215",
+      "edges": [
+        "research",
+        "qc"
+      ]
+    },
+    {
+      "id": "consensus",
+      "name": "Consensus research",
+      "kind": "research",
+      "state": "Candidate literature",
+      "desc": "A discovery result on blockchain consensus families; review the full paper before using it to justify a protocol choice.",
+      "url": "https://www.alphaxiv.org/abs/2603.08629",
+      "edges": [
+        "research",
+        "welcome"
+      ]
+    },
+    {
+      "id": "worker",
+      "name": "Cloudflare Worker source",
+      "kind": "infrastructure",
+      "state": "Public source · deployment not inferred",
+      "desc": "Worker implementation and configuration tracked in ideal-enigma. Source availability does not prove a live deployment.",
+      "url": "https://github.com/machackabook/ideal-enigma/tree/main/cloudflare",
+      "edges": [
+        "ideal",
+        "cloudflare"
+      ]
     },
     {
       "id": "cloudflare",
-      "label": "Cloudflare",
-      "kind": "infrastructure-provider",
+      "name": "Cloudflare platform",
+      "kind": "services",
+      "state": "Provider surface",
+      "desc": "Edge and developer platform. Account, zone, Worker, and API permissions must be verified independently.",
       "url": "https://developers.cloudflare.com/",
-      "status": "provider-link-only"
+      "edges": [
+        "worker",
+        "welcome"
+      ]
+    },
+    {
+      "id": "github",
+      "name": "GitHub source network",
+      "kind": "infrastructure",
+      "state": "Public repository network",
+      "desc": "Public repositories, commits, issues, and reviews are the canonical source of code provenance.",
+      "url": "https://github.com/NexusCryptic/Welcome-Sentience",
+      "edges": [
+        "welcome",
+        "ideal"
+      ]
     },
     {
       "id": "gitlab",
-      "label": "GitLab",
-      "kind": "collaboration-provider",
+      "name": "GitLab",
+      "kind": "services",
+      "state": "Provider surface · project route pending",
+      "desc": "GitLab collaboration platform; no project-specific public URL is asserted here.",
       "url": "https://gitlab.com/",
-      "status": "project-route-pending"
+      "edges": [
+        "welcome",
+        "github"
+      ]
     },
     {
-      "id": "huggingface",
-      "label": "Hugging Face",
-      "kind": "model-provider",
+      "id": "hf",
+      "name": "Hugging Face",
+      "kind": "services",
+      "state": "Provider surface · project route pending",
+      "desc": "Model and dataset platform; public organization or repository route pending canonical URL verification.",
       "url": "https://huggingface.co/",
-      "status": "project-route-pending"
+      "edges": [
+        "welcome",
+        "sos"
+      ]
     },
     {
       "id": "vercel",
-      "label": "Vercel",
-      "kind": "deployment-provider",
+      "name": "Vercel",
+      "kind": "services",
+      "state": "Provider surface · deployment route pending",
+      "desc": "Application hosting and deployment platform; no specific live deployment is certified by this link.",
       "url": "https://vercel.com/",
-      "status": "deployment-route-pending"
+      "edges": [
+        "welcome",
+        "sos"
+      ]
     },
     {
-      "id": "sos-google-ai-studio",
-      "label": "S.O.S. Google AI Studio",
-      "kind": "prototype-workspace",
+      "id": "sos",
+      "name": "S.O.S. · Google AI Studio",
+      "kind": "infrastructure",
+      "state": "Shared workspace link · access controlled",
+      "desc": "The S.O.S. prototype workspace supplied for this project. Access depends on Google sharing permissions.",
       "url": "https://aistudio.google.com/u/1/apps/69753da2-22e2-4492-a9b7-d95ee9e5c11a?showPreview=true&showAssistant=true",
-      "status": "access-controlled"
+      "edges": [
+        "welcome",
+        "hf",
+        "vercel"
+      ]
+    },
+    {
+      "id": "finance",
+      "name": "Stripe · Coinbase",
+      "kind": "services",
+      "state": "Provider surfaces · no public transaction route",
+      "desc": "Potential payments and exchange integration surfaces. The public page does not initiate financial operations.",
+      "url": "https://stripe.com/",
+      "edges": [
+        "welcome",
+        "github"
+      ]
+    },
+    {
+      "id": "devices",
+      "name": "Device / browser control",
+      "kind": "services",
+      "state": "Authenticated operator workflow",
+      "desc": "Remote Desktop Commander and Chrome are operator-side tools. Device sessions, local addresses, and credentials are not public mesh nodes.",
+      "url": "https://chatgpt.com/",
+      "edges": [
+        "welcome",
+        "ideal"
+      ]
     }
   ],
   "boundaries": [
