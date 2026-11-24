@@ -1,0 +1,742 @@
+openapi: 3.0.3
+info:
+  title: GAIA NEXUS — Cosmic Guardian and CCME API
+  version: 1.0.0
+  description: |
+    Contract for the GAIA NEXUS memory fabric, CCME encoding and verification,
+    telemetry provenance, consensus submissions, and evidence receipts.
+
+    This document specifies an API contract. It does not assert that any
+    endpoint is deployed, externally reachable, or operational.
+  contact:
+    name: Cryptic News LLC
+  license:
+    name: Proprietary — Cryptic News LLC. All rights reserved.
+  x-gaia-governance:
+    primary-owner: Cryptic News LLC
+    copyright: "© 2026 Cryptic News LLC"
+    secondary-ecosystem:
+      - name: Google
+        role: Secondary technology and integration ecosystem
+        ownership-status: no-current-ownership-grant
+      - name: OpenAI
+        role: Secondary technology and integration ecosystem
+        ownership-status: no-current-ownership-grant
+    conditional-equal-ownership-intent:
+      enabled: true
+      statement: >-
+        Cryptic News LLC records the Architect's stated intent to offer equal
+        co-ownership to Google and OpenAI if equal ownership is formally
+        asserted and accepted. No transfer or co-ownership is effective unless
+        and until all relevant parties execute a written agreement defining
+        the covered intellectual property, rights, obligations, and effective
+        date.
+    third-party-endorsement-implied: false
+    third-party-trademarks: Respective owners
+    infrastructure-providers:
+      - GitHub
+      - GitLab
+      - Cloudflare
+  x-gaia-invariants:
+    - "Boundary — Nothing executes beyond its time."
+    - "Capacity — Nothing claims capacity without measurement."
+    - "Correctness — Nothing claims correctness without verification."
+    - "Submission is not acceptance."
+    - "Acceptance is not finality."
+    - "Integrity is not authenticity."
+    - "Inclusion is not consensus."
+    - "Telemetry is not cryptographic key material."
+servers: []
+tags:
+  - name: System
+  - name: Memory
+  - name: Telemetry
+  - name: CCME
+  - name: Consensus
+  - name: Receipts
+security:
+  - bearerAuth: []
+paths:
+  /health:
+    get:
+      tags: [System]
+      summary: Read service health
+      operationId: getHealth
+      security: []
+      responses:
+        '200':
+          description: Health snapshot
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+  /v1/memories:
+    post:
+      tags: [Memory]
+      summary: Register an encrypted memory object and provenance manifest
+      operationId: createMemory
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemoryCreate'
+      responses:
+        '201':
+          description: Memory record registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryRecord'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+    get:
+      tags: [Memory]
+      summary: List memory records visible to the caller
+      operationId: listMemories
+      parameters:
+        - name: cursor
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 25
+      responses:
+        '200':
+          description: Memory page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/memories/{memoryId}:
+    get:
+      tags: [Memory]
+      summary: Retrieve a memory record and its immutable provenance envelope
+      operationId: getMemory
+      parameters:
+        - $ref: '#/components/parameters/MemoryId'
+      responses:
+        '200':
+          description: Memory record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryRecord'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /v1/telemetry:
+    post:
+      tags: [Telemetry]
+      summary: Ingest a timestamped telemetry observation
+      operationId: ingestTelemetry
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TelemetryEvent'
+      responses:
+        '202':
+          description: Telemetry accepted for processing; this is not a consensus decision
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngestionReceipt'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+  /v1/ccme/encode:
+    post:
+      tags: [CCME]
+      summary: Create a CCME encoding manifest for an encrypted object
+      operationId: encodeCcme
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcmeEncodeRequest'
+      responses:
+        '200':
+          description: Encoding manifest produced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CcmeManifest'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+  /v1/ccme/verify:
+    post:
+      tags: [CCME]
+      summary: Verify a CCME manifest and its supplied evidence
+      operationId: verifyCcme
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CcmeVerifyRequest'
+      responses:
+        '200':
+          description: Verification result; scope and checks are explicit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CcmeVerification'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+  /v1/consensus/submissions:
+    post:
+      tags: [Consensus]
+      summary: Submit a proposal to the consensus pipeline
+      operationId: createConsensusSubmission
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsensusSubmissionRequest'
+      responses:
+        '202':
+          description: Submission queued; not accepted and not finalized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsensusSubmission'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+  /v1/consensus/submissions/{submissionId}:
+    get:
+      tags: [Consensus]
+      summary: Retrieve submission lifecycle state
+      operationId: getConsensusSubmission
+      parameters:
+        - $ref: '#/components/parameters/SubmissionId'
+      responses:
+        '200':
+          description: Current submission state and decision evidence
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsensusSubmission'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /v1/receipts/{receiptId}:
+    get:
+      tags: [Receipts]
+      summary: Retrieve a signed evidence or finality receipt
+      operationId: getReceipt
+      parameters:
+        - $ref: '#/components/parameters/ReceiptId'
+      responses:
+        '200':
+          description: Receipt and verification metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceReceipt'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: false
+      description: Client-generated key used to make retry behavior deterministic.
+      schema:
+        type: string
+        minLength: 8
+        maxLength: 200
+    MemoryId:
+      name: memoryId
+      in: path
+      required: true
+      schema:
+        type: string
+    SubmissionId:
+      name: submissionId
+      in: path
+      required: true
+      schema:
+        type: string
+    ReceiptId:
+      name: receiptId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Invalid request syntax or parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Missing or invalid authentication
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Requested resource was not found or is not visible
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Conflict:
+      description: Resource version or idempotency conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unprocessable:
+      description: Request failed semantic or policy validation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    ServiceUnavailable:
+      description: Service unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    Health:
+      type: object
+      required: [status, observedAt]
+      properties:
+        status:
+          type: string
+          enum: [ok, degraded, unavailable]
+        observedAt:
+          type: string
+          format: date-time
+        components:
+          type: array
+          items:
+            type: object
+            required: [name, status]
+            properties:
+              name:
+                type: string
+              status:
+                type: string
+                enum: [ok, degraded, unavailable, unknown]
+              measuredLatencyMs:
+                type: integer
+                minimum: 0
+    Provenance:
+      type: object
+      required: [eventId, observedAt, source, clock]
+      properties:
+        eventId:
+          type: string
+        observedAt:
+          type: string
+          format: date-time
+        source:
+          type: string
+        deviceSequence:
+          type: integer
+          minimum: 0
+        monotonicNanos:
+          type: integer
+          format: int64
+          minimum: 0
+        previousEventDigest:
+          type: string
+          pattern: '^[a-fA-F0-9]{64}$'
+        clock:
+          type: object
+          required: [source, quality]
+          properties:
+            source:
+              type: string
+              enum: [device, network, trusted-timestamp, unknown]
+            quality:
+              type: string
+              enum: [synchronized, estimated, unsynchronized, unknown]
+            timezoneOffsetMinutes:
+              type: integer
+              minimum: -840
+              maximum: 840
+    MemoryCreate:
+      type: object
+      required: [objectRef, ciphertextDigest, provenance, schemaVersion]
+      properties:
+        schemaVersion:
+          type: string
+          example: "1.0.0"
+        objectRef:
+          type: string
+          description: Opaque vault/object reference; never a key or bearer credential.
+        ciphertextDigest:
+          type: string
+          pattern: '^[a-fA-F0-9]{64}$'
+        encryption:
+          type: object
+          properties:
+            algorithm:
+              type: string
+              enum: [AES-256-GCM, XCHACHA20-POLY1305, other-versioned]
+            keyEpoch:
+              type: string
+            nonceRef:
+              type: string
+              description: Opaque nonce reference; never reuse a nonce with the same key.
+        provenance:
+          $ref: '#/components/schemas/Provenance'
+        tags:
+          type: array
+          items:
+            type: string
+    MemoryRecord:
+      allOf:
+        - $ref: '#/components/schemas/MemoryCreate'
+        - type: object
+          required: [memoryId, createdAt, recordVersion]
+          properties:
+            memoryId:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            recordVersion:
+              type: integer
+              minimum: 1
+            semanticIndex:
+              type: object
+              description: Mutable navigation metadata; not part of immutable evidence.
+              properties:
+                embeddingModel:
+                  type: string
+                embeddingVersion:
+                  type: string
+                labels:
+                  type: array
+                  items:
+                    type: string
+    MemoryPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemoryRecord'
+        nextCursor:
+          type: string
+    TelemetryEvent:
+      type: object
+      required: [eventId, observedAt, source, category, measurements, clock]
+      properties:
+        eventId:
+          type: string
+        observedAt:
+          type: string
+          format: date-time
+        source:
+          type: string
+        category:
+          type: string
+          enum: [environmental, device-operational, runtime, network]
+        measurements:
+          type: object
+          additionalProperties:
+            type: number
+        unitMap:
+          type: object
+          additionalProperties:
+            type: string
+        deviceSequence:
+          type: integer
+          minimum: 0
+        monotonicNanos:
+          type: integer
+          format: int64
+          minimum: 0
+        clock:
+          type: object
+          required: [source, quality]
+          properties:
+            source:
+              type: string
+              enum: [device, network, trusted-timestamp, unknown]
+            quality:
+              type: string
+              enum: [synchronized, estimated, unsynchronized, unknown]
+        priorEventDigest:
+          type: string
+          pattern: '^[a-fA-F0-9]{64}$'
+      description: >-
+        Telemetry is provenance/context data only. It must not be used as
+        cryptographic entropy, a key, a salt, or identity proof.
+    IngestionReceipt:
+      type: object
+      required: [eventId, status, receivedAt]
+      properties:
+        eventId:
+          type: string
+        status:
+          type: string
+          enum: [received, queued]
+        receivedAt:
+          type: string
+          format: date-time
+        receiptId:
+          type: string
+    CcmeEncodeRequest:
+      type: object
+      required: [objectRef, ciphertextDigest, mode, originalByteLength]
+      properties:
+        objectRef:
+          type: string
+        ciphertextDigest:
+          type: string
+          pattern: '^[a-fA-F0-9]{64}$'
+        mode:
+          type: string
+          enum: [RAW8, U16, PACK12, UTF8, DOT]
+        originalByteLength:
+          type: integer
+          minimum: 0
+        tileWidth:
+          type: integer
+          minimum: 1
+          default: 256
+        tileHeight:
+          type: integer
+          minimum: 1
+          default: 256
+        keyEpoch:
+          type: string
+    CcmeManifest:
+      type: object
+      required: [manifestId, protocolVersion, mode, objectRef, ciphertextDigest, createdAt]
+      properties:
+        manifestId:
+          type: string
+        protocolVersion:
+          type: string
+          example: "1.0.0"
+        mode:
+          type: string
+          enum: [RAW8, U16, PACK12, UTF8, DOT]
+        objectRef:
+          type: string
+        ciphertextDigest:
+          type: string
+          pattern: '^[a-fA-F0-9]{64}$'
+        originalByteLength:
+          type: integer
+          minimum: 0
+        symbolCount:
+          type: integer
+          minimum: 0
+        tileWidth:
+          type: integer
+        tileHeight:
+          type: integer
+        merkleRoot:
+          type: string
+          pattern: '^[a-fA-F0-9]{64}$'
+        signature:
+          type: object
+          properties:
+            algorithm:
+              type: string
+            keyId:
+              type: string
+            value:
+              type: string
+        createdAt:
+          type: string
+          format: date-time
+    CcmeVerifyRequest:
+      type: object
+      required: [manifest]
+      properties:
+        manifest:
+          $ref: '#/components/schemas/CcmeManifest'
+        expectedCiphertextDigest:
+          type: string
+          pattern: '^[a-fA-F0-9]{64}$'
+    CcmeVerification:
+      type: object
+      required: [verified, checks, verifiedAt]
+      properties:
+        verified:
+          type: boolean
+        checks:
+          type: array
+          items:
+            type: object
+            required: [name, passed]
+            properties:
+              name:
+                type: string
+              passed:
+                type: boolean
+              detail:
+                type: string
+        verifiedAt:
+          type: string
+          format: date-time
+        limitations:
+          type: array
+          items:
+            type: string
+          description: Explicitly list claims not established by the checks.
+    ConsensusSubmissionRequest:
+      type: object
+      required: [proposalId, payloadDigest, policyVersion]
+      properties:
+        proposalId:
+          type: string
+        payloadDigest:
+          type: string
+          pattern: '^[a-fA-F0-9]{64}$'
+        policyVersion:
+          type: string
+        evidenceReceiptIds:
+          type: array
+          items:
+            type: string
+        expiresAt:
+          type: string
+          format: date-time
+    ConsensusSubmission:
+      type: object
+      required: [submissionId, proposalId, status, submittedAt]
+      properties:
+        submissionId:
+          type: string
+        proposalId:
+          type: string
+        status:
+          type: string
+          enum: [queued, validating, eligible, accepted, rejected, finalized, expired]
+        submittedAt:
+          type: string
+          format: date-time
+        decisionAt:
+          type: string
+          format: date-time
+        finalityAt:
+          type: string
+          format: date-time
+        decisionReason:
+          type: string
+        decisionReceiptId:
+          type: string
+        finalityReceiptId:
+          type: string
+        policyVersion:
+          type: string
+        stateVersion:
+          type: integer
+          minimum: 1
+      description: >-
+        accepted and finalized are distinct states. A 202 response only means
+        the submission was queued. The implementation must define and publish
+        the transition rules and evidence required for each state.
+    EvidenceReceipt:
+      type: object
+      required: [receiptId, receiptType, subjectDigest, issuedAt]
+      properties:
+        receiptId:
+          type: string
+        receiptType:
+          type: string
+          enum: [ingestion, integrity, decision, finality, timestamp]
+        subjectDigest:
+          type: string
+          pattern: '^[a-fA-F0-9]{64}$'
+        issuedAt:
+          type: string
+          format: date-time
+        issuer:
+          type: string
+        signatureAlgorithm:
+          type: string
+        signingKeyId:
+          type: string
+        signature:
+          type: string
+        previousReceiptDigest:
+          type: string
+          pattern: '^[a-fA-F0-9]{64}$'
+        verificationUri:
+          type: string
+          format: uri
+    ApiError:
+      type: object
+      required: [code, message, requestId]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        requestId:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              issue:
+                type: string
