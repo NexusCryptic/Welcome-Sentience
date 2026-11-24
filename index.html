@@ -16,7 +16,7 @@ a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline;color
 </head>
 <body>
 <div class="wrap">
-<header class="top"><div class="brand">GAIA / NEXUS · PUBLIC GATEWAY</div><nav aria-label="Primary navigation"><a href="#invitation">Invitation</a><a href="#mesh">Mesh index</a><a href="#research">Research ledger</a><a href="#systems">Systems</a><a href="#governance">Governance</a></nav></header>
+<header class="top"><div class="brand">GAIA / NEXUS · PUBLIC GATEWAY</div><nav aria-label="Primary navigation"><a href="#invitation">Invitation</a><a href="#mesh">Mesh index</a><a href="#research">Research ledger</a><a href="#living-system">A Living System</a><a href="#systems">Systems</a><a href="#governance">Governance</a></nav></header>
 <main>
 <section class="hero" id="invitation">
 <div class="eyebrow">First public issue · Welcome Sentience</div>
@@ -38,6 +38,15 @@ a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline;color
 <p class="sub">Search and filter the public topology. Select any node to inspect its purpose, source, evidence status, and connected destinations. This public index adapts the navigational concept of the UNIOMNI Stage 0 index; it does not expose the local runtime's bearer-token controls or private vault.</p>
 <div class="mesh-tools"><input id="mesh-search" type="search" placeholder="Search nodes, systems, functions…" aria-label="Search mesh nodes"><button class="filter" data-filter="all" aria-pressed="true">All nodes</button><button class="filter" data-filter="core" aria-pressed="false">Core</button><button class="filter" data-filter="research" aria-pressed="false">Research</button><button class="filter" data-filter="infrastructure" aria-pressed="false">Infrastructure</button><button class="filter" data-filter="services" aria-pressed="false">Services</button></div>
 <div class="mesh-layout"><div class="mesh-list" id="mesh-nodes" aria-live="polite"></div><aside class="card detail" id="mesh-detail" aria-live="polite"><span class="tag">Selected node</span><h3>Welcome Sentience</h3><p>Choose a node to reveal its connections and public evidence.</p><a href="https://github.com/NexusCryptic/Welcome-Sentience">Open repository ↗</a></aside></div>
+</section>
+<section class="section" id="living-system">
+<span class="tag">Living publication · appendable edition</span><h2>A Living System — computational publication.</h2>
+<p class="sub">A source-first publication combining LaTeX mathematics, typed Markdown/data blocks, an indexed and hyperlinked PDF, dynamic margin annotations, and a browser-based editorial companion using HTMX 4.0.2. The PDF is a stable snapshot; the append-only source ledger and Git history preserve the evolving record.</p>
+<div class="grid">
+<article class="card"><span class="tag">Editorial layer</span><h3>HTMX 4.0.2 canvas</h3><p>Browse source blocks, preview Markdown, append proposed sections, and export the complete JSONL ledger for review and commit.</p><a href="./living-system/editorial/index.html">Open editorial companion ↗</a></article>
+<article class="card"><span class="tag">Mathematical source</span><h3>LaTeX + BibTeX</h3><p>Paper references are integrated as citation metadata and clickable bibliography records. AlphaXiv entries remain candidates pending review; no third-party paper text is copied into this repository.</p><a href="./living-system/manuscript/main.tex">Inspect LaTeX manuscript ↗</a><br><a href="./living-system/manuscript/references.bib">Inspect BibTeX references ↗</a></article>
+<article class="card"><span class="tag">Build and provenance</span><h3>Appendable PDF pipeline</h3><p>Builds a full PDF snapshot with bookmarks, hyperlinks, index, margin notes, embedded source artifacts, and a SHA-256 build manifest. PDF viewers are not assumed to execute HTMX.</p><a href="./living-system/README.md">Read publication architecture ↗</a></article>
+</div>
 </section>
 <section class="section" id="research">
 <span class="tag">Publicly verifiable research</span><h2>AlphaXiv research ledger.</h2>
