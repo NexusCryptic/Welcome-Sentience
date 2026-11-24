@@ -63,7 +63,12 @@ def pandoc_markdown(source: str) -> str:
     if proc.returncode: raise RuntimeError("Pandoc conversion failed: "+proc.stderr.strip())
     return proc.stdout
 
+def bib_keys():
+    bib=(BASE/"manuscript"/"references.bib").read_text(encoding="utf-8")
+    return set(re.findall(r"@\\w+\\s*{\\s*([^,]+)",bib))
+
 def make_body(blocks):
+    known_keys=bib_keys()
     out=[]
     for block in blocks:
         title=tex_escape(block["title"]); slug="block:"+str(block["id"])
@@ -71,6 +76,11 @@ def make_body(blocks):
         margin=block.get("margin","").strip()
         if margin: out.append("\\marginpar{\\raggedright\\scriptsize\\textbf{Margin}\\par "+tex_escape(margin)+"}\n")
         for term in block.get("index_terms",[]): out.append("\\index{"+tex_escape(term)+"}\n")
+        citation_keys=block.get("citation_keys",[])
+        unknown=set(citation_keys)-known_keys
+        if unknown: raise ValueError(f"Unknown BibTeX citation keys in {block['id']}: {sorted(unknown)}")
+        if citation_keys:
+            out.append("\\noindent\\textit{Research citations:} \\cite{"+",".join(citation_keys)+"}\\par\\n")
         if block["kind"]=="math": out.append("\\[\\displaystyle "+block["content"]+"\\]\n")
         else: out.append(pandoc_markdown(block["content"])+"\n")
         for source in block.get("sources",[]):
