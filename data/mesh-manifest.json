@@ -280,14 +280,15 @@
       "id": "living-system",
       "name": "A Living System",
       "kind": "core",
-      "state": "Project node · canonical route pending",
-      "desc": "Cross-project evolution and integration workspace spanning GAIA/NEXUS artifacts. Authoritative public repository or page is not yet assigned in this index.",
+      "state": "Public source · PDF workflow configured; build not yet verified",
+      "desc": "Source-first computational publication: LaTeX and BibTeX research integration, typed Markdown/math blocks, append-only JSONL content ledger, margin annotations, indexed PDF generation, embedded source artifacts, and HTMX 4.0.2 editorial companion. The generated PDF is not yet claimed until the workflow succeeds.",
       "edges": [
         "welcome",
         "golden-army",
         "telecommunications",
         "hamiltonian-test"
-      ]
+      ],
+      "url": "https://github.com/NexusCryptic/Welcome-Sentience/tree/main/living-system"
     },
     {
       "id": "hamiltonian-test",
