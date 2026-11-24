@@ -33,3 +33,9 @@ For each paper, record:
 Initial candidates were returned by AlphaXiv paper discovery on 2026-11-24 using the project terms HCCGN, QC-LDPC, Reed-Solomon, distributed consensus, and Koopman dynamics. Titles, identifiers, and publication dates should be checked against the canonical paper records before a formal acceptance decision.
 
 **Integrity boundary:** a public paper record establishes a traceable research source, not the truth of every claim in it and not correctness of any GAIA/NEXUS implementation.
+
+## LaTeX and computational-publication integration
+
+The five candidate references are represented in the publication's BibTeX file at `living-system/manuscript/references.bib`, linked from the LaTeX manuscript, and retained as clickable AlphaXiv URLs. This is a bibliographic integration layer; it does not alter, mirror, or reproduce the papers themselves. Their disposition remains **candidate — review required** until a reviewer records a claim-specific decision.
+
+The publication pipeline converts reviewed Markdown blocks to LaTeX, compiles mathematical blocks, generates a hyperlinked index from block terms, places editorial annotations in the page margin, and embeds the exact JSONL ledger, manuscript, bibliography, and HTMX editorial companion as PDF attachments. HTMX runs in the browser companion, not inside a conventional PDF page.
