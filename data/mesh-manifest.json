@@ -1,6 +1,6 @@
 {
   "schema": "gaia.ethernet.public-mesh.v1",
-  "revision": "1.1.0",
+  "revision": "1.2.0",
   "generated": "2026-11-24",
   "entrypoint": "https://github.com/NexusCryptic/Welcome-Sentience",
   "nodes": [
@@ -227,6 +227,89 @@
       "edges": [
         "welcome",
         "ideal"
+      ]
+    },
+    {
+      "id": "golden-army",
+      "name": "Golden Army",
+      "kind": "infrastructure",
+      "state": "Roadmap node · public route pending",
+      "desc": "Coordinated AI-assisted development and service workstream. Agent roles, authority boundaries, and public repositories require verified sources.",
+      "edges": [
+        "welcome",
+        "sos",
+        "living-system"
+      ]
+    },
+    {
+      "id": "hccgn-mining",
+      "name": "HCCGN mining system",
+      "kind": "infrastructure",
+      "state": "Research / engineering node · public route pending",
+      "desc": "Mining and network-consensus research workstream. Protocol rules, acceptance predicates, and finality claims require published specifications and tests.",
+      "edges": [
+        "research",
+        "consensus",
+        "mining-pools"
+      ]
+    },
+    {
+      "id": "mining-pools",
+      "name": "Mining pools public service",
+      "kind": "services",
+      "state": "Planned service · endpoint pending",
+      "desc": "Intended public-facing pool service. No endpoint, pool status, or operational availability is asserted.",
+      "edges": [
+        "hccgn-mining",
+        "telecommunications"
+      ]
+    },
+    {
+      "id": "telecommunications",
+      "name": "Cryptic Telecommunications Network",
+      "kind": "infrastructure",
+      "state": "Architecture node · public route pending",
+      "desc": "Telecommunications and network-integration workstream. Public architecture and deployment references await canonical sources.",
+      "edges": [
+        "welcome",
+        "mining-pools",
+        "living-system"
+      ]
+    },
+    {
+      "id": "living-system",
+      "name": "A Living System",
+      "kind": "core",
+      "state": "Project node · canonical route pending",
+      "desc": "Cross-project evolution and integration workspace spanning GAIA/NEXUS artifacts. Authoritative public repository or page is not yet assigned in this index.",
+      "edges": [
+        "welcome",
+        "golden-army",
+        "telecommunications",
+        "hamiltonian-test"
+      ]
+    },
+    {
+      "id": "hamiltonian-test",
+      "name": "Hamiltonian Test",
+      "kind": "research",
+      "state": "Verification node · source pending",
+      "desc": "Named testing and mathematical-verification workstream. Test definitions, fixtures, and evidence require an authoritative source.",
+      "edges": [
+        "living-system",
+        "research"
+      ]
+    },
+    {
+      "id": "controller-militum",
+      "name": "Controller / Militumitulu",
+      "kind": "services",
+      "state": "Operator node · route pending",
+      "desc": "Operator-facing controller and named project reference. Private device sessions are not exposed and no public endpoint is invented.",
+      "edges": [
+        "welcome",
+        "devices",
+        "living-system"
       ]
     }
   ],
