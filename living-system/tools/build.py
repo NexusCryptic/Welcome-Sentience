@@ -65,7 +65,7 @@ def pandoc_markdown(source: str) -> str:
 
 def bib_keys():
     bib=(BASE/"manuscript"/"references.bib").read_text(encoding="utf-8")
-    return set(re.findall(r"@\\w+\\s*{\\s*([^,]+)",bib))
+    return {line.split("{",1)[1].split(",",1)[0].strip() for line in bib.splitlines() if line.lstrip().startswith("@") and "{" in line}
 
 def make_body(blocks):
     known_keys=bib_keys()
@@ -80,7 +80,7 @@ def make_body(blocks):
         unknown=set(citation_keys)-known_keys
         if unknown: raise ValueError(f"Unknown BibTeX citation keys in {block['id']}: {sorted(unknown)}")
         if citation_keys:
-            out.append("\\noindent\\textit{Research citations:} \\cite{"+",".join(citation_keys)+"}\\par\\n")
+            out.append("\\noindent\\textit{Research citations:} \\cite{"+",".join(citation_keys)+"}\\par{}")
         if block["kind"]=="math": out.append("\\[\\displaystyle "+block["content"]+"\\]\n")
         else: out.append(pandoc_markdown(block["content"])+"\n")
         for source in block.get("sources",[]):
