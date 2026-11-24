@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A Living System — appendable editorial companion and typed source ledger.">
+<title>A Living System · Editorial Canvas</title>
+<script src="https://cdn.jsdelivr.net/npm/htmx.org@4.0.2/dist/htmx.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js" defer></script>
+<style>
+:root{color-scheme:dark;--bg:#070b13;--panel:#101a29;--line:#294157;--ink:#e7f0f7;--muted:#9eb1c3;--cyan:#65d8e8;--gold:#e6bd67}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#123044 0,transparent 38%),var(--bg);color:var(--ink);font:15px/1.55 system-ui,sans-serif}
+header{padding:24px clamp(16px,4vw,52px);border-bottom:1px solid var(--line)}h1{margin:0;color:var(--gold);font-size:clamp(1.7rem,4vw,2.7rem)}header p{color:var(--muted);max-width:850px}
+main{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:18px;padding:20px clamp(12px,3vw,40px);max-width:1500px;margin:auto}
+.panel{background:linear-gradient(145deg,#132236ee,#0b1320ee);border:1px solid var(--line);border-radius:16px;padding:18px;min-width:0}
+label{display:block;color:var(--muted);font-size:.85rem;margin:.8rem 0 .25rem}input,select,textarea{width:100%;background:#08111d;color:var(--ink);border:1px solid #36516b;border-radius:8px;padding:10px;font:inherit}textarea{min-height:190px;resize:vertical}
+button,.button{background:#15384b;color:var(--ink);border:1px solid #47758b;border-radius:9px;padding:9px 13px;cursor:pointer;text-decoration:none;display:inline-block;margin:5px 5px 5px 0}button:hover,.button:hover{border-color:var(--cyan)}.primary{background:#164c5c;border-color:var(--cyan)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.muted{color:var(--muted)}.pill{font:12px ui-monospace,monospace;color:var(--gold);border:1px solid #6b5936;border-radius:99px;padding:3px 8px}
+#preview{min-height:170px;padding:12px;background:#080f19;border:1px solid var(--line);border-radius:10px;overflow-wrap:anywhere}#preview pre{white-space:pre-wrap}
+#blocks{display:grid;gap:10px;margin-top:12px}.block{padding:12px;border:1px solid var(--line);border-radius:10px;background:#0b1421}.block h3{margin:0 0 6px;color:var(--cyan)}.block small{color:var(--muted)}
+a{color:var(--cyan)}footer{padding:18px 4vw;color:var(--muted);border-top:1px solid var(--line)}
+@media(max-width:850px){main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="pill">HTMX 4.0.2 · EDITORIAL COMPANION</div>
+  <h1>A Living System</h1>
+  <p>Typed Markdown and LaTeX blocks feed a versioned publication ledger. The PDF is a stable snapshot; this browser canvas is the editable layer. No PDF scripting or hidden execution is assumed.</p>
+  <div class="row">
+    <a class="button" href="../README.md">Publication architecture</a>
+    <a class="button" href="../../research/ALPHAXIV_RESEARCH_LEDGER.md">AlphaXiv evidence ledger</a>
+    <a class="button" href="https://github.com/NexusCryptic/Welcome-Sentience">Repository provenance</a>
+  </div>
+</header>
+<main>
+<section class="panel">
+  <h2>Editorial canvas</h2>
+  <p class="muted">Create a Markdown content block or a LaTeX math block. HTML is never accepted as a content type. Each block receives a unique identifier and sequence number.</p>
+  <label for="kind">Block type</label>
+  <select id="kind"><option value="markdown">Markdown</option><option value="math">LaTeX mathematics</option></select>
+  <label for="title">Section title</label><input id="title" maxlength="180" placeholder="A precise, reviewable heading">
+  <label for="body">Content</label><textarea id="body" spellcheck="true" placeholder="Markdown text, or a LaTeX math expression when Math is selected."></textarea>
+  <label for="margin">Margin annotation</label><input id="margin" maxlength="240" placeholder="Short note for the printed outer margin">
+  <label for="terms">Index terms (comma-separated)</label><input id="terms" placeholder="provenance, QC-LDPC, verification">
+  <label for="source">Source URL (optional)</label><input id="source" type="url" placeholder="https://…">
+  <div class="row">
+    <button id="previewBtn" type="button">Preview Markdown</button>
+    <button id="appendBtn" class="primary" type="button">Append block</button>
+    <button id="exportBtn" type="button">Export full JSONL ledger</button>
+  </div>
+  <h3>Safe preview</h3><div id="preview" aria-live="polite"><span class="muted">Preview appears here. Markdown is sanitized before display.</span></div>
+  <p id="status" class="muted" role="status">Loading source ledger…</p>
+</section>
+<aside class="panel">
+  <h2>Publication index</h2>
+  <div class="row"><span class="pill" id="count">0 blocks</span><span class="pill">append-only source model</span></div>
+  <div id="blocks"></div>
+  <hr style="border-color:var(--line);margin:18px 0">
+  <h3>Research ledger</h3>
+  <div id="research-slot" hx-get="partials/research-ledger.html" hx-trigger="load" hx-swap="innerHTML">
+    <p class="muted">Loading research navigation…</p>
+  </div>
+  <h3>Build contract</h3>
+  <p class="muted">The build pipeline validates block IDs and sequence order, converts Markdown through Pandoc, compiles the LaTeX manuscript, generates the index and embeds source artifacts. Git commits preserve historical revisions.</p>
+  <a class="button" href="../README.md">Read build instructions</a>
+</aside>
+</main>
+<footer>Boundary — Nothing executes beyond its time. Capacity — Nothing claims capacity without measurement. Correctness — Nothing claims correctness without verification.</footer>
+<script>
+(()=> {
+  "use strict";
+  const ledgerUrl="../content/blocks.jsonl";
+  let blocks=[];
+  const $=id=>document.getElementById(id);
+  const status=message=>$("status").textContent=message;
+  const safeMarkdown=source=>{
+    if(!window.marked||!window.DOMPurify) return "<pre></pre>";
+    return DOMPurify.sanitize(marked.parse(source,{gfm:true,breaks:false}));
+  };
+  const render=()=>{
+    $("count").textContent=blocks.length+" blocks";
+    const host=$("blocks");host.replaceChildren();
+    for(const block of blocks){
+      const card=document.createElement("article");card.className="block";
+      const title=document.createElement("h3");title.textContent=block.sequence+". "+block.title;
+      const meta=document.createElement("small");meta.textContent=block.kind+" · "+block.id+" · "+(block.status||"candidate");
+      const body=document.createElement("p");body.textContent=block.kind==="math"?"LaTeX: "+block.content:block.content.slice(0,220);
+      card.append(title,meta,body);host.append(card);
+    }
+  };
+  const parseLedger=text=>text.split(/\r?\n/).filter(line=>line.trim()).map(line=>JSON.parse(line));
+  fetch(ledgerUrl).then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.text()})
+    .then(text=>{blocks=parseLedger(text);render();status("Loaded "+blocks.length+" source blocks. Local edits remain local until exported and committed.");})
+    .catch(error=>{status("Ledger load unavailable ("+error.message+"). Serve this directory over HTTP(S), or import a JSONL ledger in a later revision.");});
+  $("previewBtn").addEventListener("click",()=>{
+    const content=$("body").value;
+    $("preview").innerHTML=$("kind").value==="math"?"<pre>"+content.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))+"</pre>":safeMarkdown(content);
+  });
+  $("appendBtn").addEventListener("click",()=>{
+    const title=$("title").value.trim(),content=$("body").value.trim();
+    if(!title||!content){status("A title and content are required.");return;}
+    const sequence=blocks.reduce((n,b)=>Math.max(n,Number(b.sequence)||0),0)+1;
+    const id="ls-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,7);
+    const source=$("source").value.trim();
+    if(source&&!/^https:\/\//i.test(source)){status("Source URLs must use HTTPS.");return;}
+    const block={id,sequence,kind:$("kind").value,title,content,margin:$("margin").value.trim(),
+      index_terms:$("terms").value.split(",").map(x=>x.trim()).filter(Boolean),
+      sources:source?[{label:"Editorial source",url:source}]:[],status:"candidate"};
+    blocks.push(block);render();status("Appended locally as sequence "+sequence+". Export the full JSONL ledger and commit it for a durable revision.");
+    $("title").value="";$("body").value="";$("margin").value="";$("terms").value="";$("source").value="";
+  });
+  $("exportBtn").addEventListener("click",()=>{
+    const payload=blocks.map(block=>JSON.stringify(block)).join("\n")+"\n";
+    const blob=new Blob([payload],{type:"application/x-ndjson"});
+    const url=URL.createObjectURL(blob),a=document.createElement("a");
+    a.href=url;a.download="blocks.jsonl";a.click();URL.revokeObjectURL(url);
+    status("Exported "+blocks.length+" blocks. Review and commit the file to preserve the new revision.");
+  });
+})();
+</script>
+</body>
+</html>
