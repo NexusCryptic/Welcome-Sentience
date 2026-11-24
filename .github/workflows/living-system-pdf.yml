@@ -1,0 +1,37 @@
+name: Living System PDF
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "living-system/**"
+      - "research/ALPHAXIV_RESEARCH_LEDGER.md"
+      - ".github/workflows/living-system-pdf.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install publication toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-lang-english
+          python -m pip install --upgrade pip pypdf
+      - name: Build and verify PDF
+        run: python living-system/tools/build.py
+      - name: Upload PDF and build manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: a-living-system-computational-publication
+          path: |
+            living-system/dist/A-Living-System.pdf
+            living-system/dist/build-manifest.json
+          if-no-files-found: error
